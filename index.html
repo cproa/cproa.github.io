@@ -3,37 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Página</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Escuela ABC</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    header {
+      background-color: #2a7f62;
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #3c9d75;
+    }
+
+    nav a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      background-color: #276b4f;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #2a7f62;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .card h3 {
+      margin: 1rem 0;
+      color: #2a7f62;
+    }
+
+    footer {
+      background-color: #2a7f62;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      margin-top: 3rem;
+    }
+  </style>
 </head>
 <body>
-  <h1 id="titulo">Bienvenido a mi página</h1>
+  <!-- Header -->
+  <header>
+    <h1>Escuela ABC</h1>
+    <p>Formando a los líderes del mañana</p>
+  </header>
 
-  <div id="contenido">
-    <p>Contenido predeterminado de la página.</p>
+  <!-- Navbar -->
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="#">Nosotros</a>
+    <a href="#">Cursos</a>
+    <a href="#">Contacto</a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Misión y Visión -->
+    <section>
+      <h2 class="section-title">Nuestra Misión</h2>
+      <p class="text-center">En la Escuela ABC nos dedicamos a proporcionar una educación de calidad, desarrollando habilidades que preparan a los estudiantes para los retos del futuro.</p>
+    </section>
+
+    <!-- Cursos -->
+    <section>
+      <h2 class="section-title">Nuestros Cursos</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Matemáticas</h3>
+          <p>Curso diseñado para fortalecer las habilidades numéricas y lógicas de los estudiantes.</p>
+        </div>
+        <div class="card">
+          <h3>Ciencias</h3>
+          <p>Explora el mundo de la biología, química y física a través de experimentos y teoría.</p>
+        </div>
+        <div class="card">
+          <h3>Lengua y Literatura</h3>
+          <p>Fomenta la expresión escrita y oral, desarrollando habilidades de lectura y escritura.</p>
+        </div>
+        <div class="card">
+          <h3>Historia</h3>
+          <p>Un viaje a través de los eventos que han moldeado nuestro mundo.</p>
+        </div>
+      </div>
+    </section>
   </div>
 
-  <script>
-    // Obtener la parte de la ruta después de '/'
-    const path = window.location.pathname;
-
-    // Eliminar la barra diagonal y dividir la ruta
-    const page = path.replace('/', '').toLowerCase();
-
-    // Cambiar el contenido de la página según la ruta
-    const titleElement = document.getElementById('titulo');
-    const contentElement = document.getElementById('contenido');
-
-    // Modificar el título y el contenido según la ruta
-    if (page === "buenas-tardes") {
-      titleElement.textContent = "Buenas Tardes";
-      contentElement.innerHTML = "<p>¡Buenas tardes! Bienvenido a esta página.</p>";
-    } else if (page === "hola") {
-      titleElement.textContent = "Hola";
-      contentElement.innerHTML = "<p>¡Hola! ¿Cómo estás?</p>";
-    } else {
-      titleElement.textContent = "Bienvenido a mi página";
-      contentElement.innerHTML = "<p>Contenido predeterminado de la página.</p>";
-    }
-  </script>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Escuela ABC. Todos los derechos reservados.</p>
+    <p><a href="mailto:info@escuelaabc.com" style="color: white;">info@escuelaabc.com</a></p>
+  </footer>
 </body>
 </html>
