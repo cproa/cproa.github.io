@@ -3,22 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Escuelas Proa La Falda</title>
+  <title>Mi Página</title>
 </head>
 <body>
-  <h1 id="titulo">Bienvenido soy Andres</h1>
+  <h1 id="titulo">Bienvenido a mi página</h1>
+
+  <div id="contenido">
+    <p>Contenido predeterminado de la página.</p>
+  </div>
 
   <script>
-    // Obtener la ruta de la URL
+    // Obtener la parte de la ruta después de '/'
     const path = window.location.pathname;
 
-    // Eliminar la barra inicial y final para obtener solo la parte del "path"
+    // Eliminar la barra diagonal y dividir la ruta
     const page = path.replace('/', '').toLowerCase();
 
-    // Cambiar el contenido del <h1> basado en la ruta
+    // Cambiar el contenido de la página según la ruta
     const titleElement = document.getElementById('titulo');
-    if (page) {
-      titleElement.textContent = page;
+    const contentElement = document.getElementById('contenido');
+
+    // Modificar el título y el contenido según la ruta
+    if (page === "buenas-tardes") {
+      titleElement.textContent = "Buenas Tardes";
+      contentElement.innerHTML = "<p>¡Buenas tardes! Bienvenido a esta página.</p>";
+    } else if (page === "hola") {
+      titleElement.textContent = "Hola";
+      contentElement.innerHTML = "<p>¡Hola! ¿Cómo estás?</p>";
+    } else {
+      titleElement.textContent = "Bienvenido a mi página";
+      contentElement.innerHTML = "<p>Contenido predeterminado de la página.</p>";
     }
   </script>
 </body>
