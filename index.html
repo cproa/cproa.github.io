@@ -1,7 +1,25 @@
-<!DOCTYPE hmtl>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escuelas Proa La Falda</title>
+</head>
+<body>
+  <h1 id="titulo">Bienvenido soy Andres</h1>
 
-<html>
-  <h1>
-    hola
-  </h1>
+  <script>
+    // Obtener la ruta de la URL
+    const path = window.location.pathname;
+
+    // Eliminar la barra inicial y final para obtener solo la parte del "path"
+    const page = path.replace('/', '').toLowerCase();
+
+    // Cambiar el contenido del <h1> basado en la ruta
+    const titleElement = document.getElementById('titulo');
+    if (page) {
+      titleElement.textContent = page;
+    }
+  </script>
+</body>
 </html>
