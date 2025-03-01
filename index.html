@@ -44,6 +44,14 @@
       margin: 0.5rem 0;
     }
 
+    /* Nueva clase para el nombre del usuario en el header */
+    .nombre-usuario {
+      position: absolute;
+      top: 2rem;
+      right: 1rem;
+      font-size: 1.5rem;
+    }
+
     nav {
       display: flex;
       justify-content: center;
@@ -130,6 +138,8 @@
     <img src="logo.png" alt="Logo de la Escuela">
     <h1>Escuela Proa La Falda</h1>
     <p>Formando a los líderes del mañana</p>
+    <!-- Aquí se agregará el nombre del usuario -->
+    <div class="nombre-usuario" id="nombreUsuarioHeader"></div>
   </header>
 
   <!-- Navbar -->
@@ -142,6 +152,7 @@
     <a href="perfil.html">Perfil</a>
     <a href="olimpiadas.html">Olimpiadas</a>
     <a href="egresados.html">Egresados</a>
+    <a href="egresados.html">⭕EN VIVO</a>
   </nav>
 
   <!-- Main Content -->
@@ -181,5 +192,15 @@
     <p>&copy; 2025 Escuela Proa La Falda. Todos los derechos reservados.</p>
     <p><a href="mailto:info@escuelaabc.com">info@escuelasproa.edu.ar</a></p>
   </footer>
+
+  <script>
+    // Obtener el usuario logueado desde localStorage
+    const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
+    
+    // Mostrar el nombre del usuario en el header si está logueado
+    if (usuarioLogueado) {
+      document.getElementById('nombreUsuarioHeader').textContent = usuarioLogueado.nombreCompleto;
+    }
+  </script>
 </body>
 </html>
