@@ -95,7 +95,7 @@
     <!-- Información del usuario -->
     <div id="nombreUsuario" class="profile-info"></div>
     <div id="añoCursando" class="profile-info"></div>
-    <div id="curso" class="profile-info"></div>
+    <div id="comportamiento" class="profile-info"></div>
     <div id="correo" class="profile-info"></div>
 
     <button onclick="cerrarSesion()">Cerrar sesión</button>
@@ -110,7 +110,7 @@
     if (usuarioLogueado) {
       document.getElementById('nombreUsuario').textContent = 'Nombre: ' + usuarioLogueado.nombreCompleto;
       document.getElementById('añoCursando').textContent = 'Año Cursando: ' + usuarioLogueado.añoCursando;
-      document.getElementById('comportamiento').textContent = 'tu comportamiento: ' + usuarioLogueado.comportamiento;
+      document.getElementById('comportamiento').textContent = 'Comportamiento: ' + usuarioLogueado.comportamiento;
       document.getElementById('correo').textContent = 'Correo: ' + usuarioLogueado.correo;
     } else {
       window.location.href = 'login.html'; // Si no hay usuario logueado, redirigir al login
