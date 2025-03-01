@@ -81,40 +81,38 @@
     button:hover {
       background-color: #4a90e2;
     }
-
   </style>
   <script>
     // Simulamos el archivo JSON que contiene los usuarios y contraseñas
     const usuarios = {
-    "49460426": {
-      id: 0,
-      contraseña: "2277",
-      nombreCompleto: "Andrés Gabriel Morillo Figueroa",
-      añoCursando: 4, // Año que está cursando
-      comportamiento: "bueno", // Curso que está tomando
-      correo: "agmorillofigueroa@escuelasproa.edu.ar" // Correo del usuario (puedes agregar más propiedades)
+      "49460426": {
+        id: 0,
+        contraseña: "2277",
+        nombreCompleto: "Andrés Gabriel Morillo Figueroa",
+        añoCursando: 4,
+        comportamiento: "bueno",
+        correo: "agmorillofigueroa@escuelasproa.edu.ar"
       },
-    "dni": {
-      id: 1,
-      contraseña: "1messigay5",
-      nombreCompleto: "Ariel Valentin Ruizdiaz",
-      añoCursando: 4, // Año que está cursando
-      comportamiento: "bueno", // Curso que está tomando
-      correo: "example@escuelasproa.edua.ar" // Correo del usuario
+      "12345678": { // Simulamos otro usuario con DNI
+        id: 1,
+        contraseña: "1messigay5",
+        nombreCompleto: "Ariel Valentin Ruizdiaz",
+        añoCursando: 2,
+        comportamiento: "excelente",
+        correo: "arielruiz@escuelasproa.edu.ar"
       }
     };
-
 
     // Función para manejar el inicio de sesión
     function iniciarSesion() {
       let nombre = document.getElementById('nombre').value;
       let contrasena = document.getElementById('contrasena').value;
 
-      // Verificar si el nombre de usuario existe y si la contraseña es correcta
-      if (usuarios[nombre] && usuarios[nombre] === contrasena) {
+      // Verificar si el nombre de usuario (DNI) existe y si la contraseña es correcta
+      if (usuarios[nombre] && usuarios[nombre].contraseña === contrasena) {
         // Guardar al usuario logueado en el localStorage
-        localStorage.setItem('usuarioLogueado', nombre);
-        alert('Bienvenido ' + nombre);
+        localStorage.setItem('usuarioLogueado', JSON.stringify(usuarios[nombre]));
+        alert('Bienvenido ' + usuarios[nombre].nombreCompleto);
         window.location.href = 'perfil.html'; // Redirigir al perfil
       } else {
         alert('Nombre de usuario o contraseña incorrectos');
@@ -131,7 +129,7 @@
 
   <div class="container">
     <h2 class="section-title">Iniciar Sesión</h2>
-    <input type="text" id="nombre" placeholder="Nombre de usuario" required>
+    <input type="text" id="nombre" placeholder="DNI" required>
     <input type="password" id="contrasena" placeholder="Contraseña" required>
     <button onclick="iniciarSesion()">Iniciar sesión</button>
   </div>
