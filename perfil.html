@@ -61,6 +61,21 @@
     .text-center {
       text-align: center;
     }
+
+    button {
+      background-color: #72c5ff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #4a90e2;
+    }
   </style>
 </head>
 <body>
@@ -74,6 +89,8 @@
     <h2 class="section-title">Bienvenido a tu perfil</h2>
     <p class="text-center" id="nombreUsuario"></p>
     <button onclick="cerrarSesion()">Cerrar sesión</button>
+    <!-- Botón para regresar a la página de inicio (index.html) -->
+    <button onclick="regresar()">Volver al inicio</button>
   </div>
 
   <script>
@@ -91,6 +108,11 @@
     function cerrarSesion() {
       localStorage.removeItem('usuarioLogueado');
       window.location.href = 'login.html'; // Redirigir al login después de cerrar sesión
+    }
+
+    // Función para regresar al inicio
+    function regresar() {
+      window.location.href = 'index.html'; // Redirigir a la página de inicio
     }
   </script>
 </body>
