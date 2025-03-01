@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil - Escuela Proa La Falda</title>
-  <!-- Icono de la pestaña -->
   <link rel="icon" href="logo.ico" type="image/x-icon">
   <style>
     body {
@@ -17,17 +16,16 @@
     }
 
     header {
-      background-color: rgba(0, 151, 255, 0.8); /* Azul más suave y transparente */
+      background-color: rgba(0, 151, 255, 0.8);
       color: white;
       text-align: center;
       padding: 2rem 0;
       position: relative;
       border-radius: 20px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Efecto flotante */
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       margin: 2rem;
     }
 
-    /* Logo en la esquina izquierda */
     header img {
       position: absolute;
       top: 1rem;
@@ -44,35 +42,13 @@
       margin: 0.5rem 0;
     }
 
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: rgba(179, 224, 255, 0.7); /* Azul transparente */
-      border-radius: 20px;
-      margin: 0 2rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    nav a {
-      color: white;
-      padding: 14px 20px;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    nav a:hover {
-      background-color: #72c5ff;
-    }
-
     .container {
       padding: 2rem;
-      max-width: 900px;
+      max-width: 500px;
       margin: 3rem auto;
       background-color: rgba(255, 255, 255, 0.8);
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
     .section-title {
@@ -82,104 +58,40 @@
       color: #72c5ff;
     }
 
-    .profile-info {
-      background-color: rgba(95, 165, 255, 0.9); /* Azul transparente */
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .profile-info div {
-      margin-bottom: 1rem;
-    }
-
-    .profile-info label {
-      font-weight: bold;
-      color: #219bff;
-    }
-
-    footer {
-      background-color: rgba(0, 112, 255, 0.8);
-      color: white;
+    .text-center {
       text-align: center;
-      padding: 1rem 0;
-      margin-top: 3rem;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    }
-
-    footer a {
-      color: white;
-      text-decoration: none;
     }
   </style>
-  <script>
-    // Función para cargar los datos del perfil
-    function cargarPerfil() {
-      // Recuperar datos guardados en localStorage
-      let nombre = localStorage.getItem('nombreUsuario');
-      let contrasena = localStorage.getItem('contrasenaUsuario');
-
-      // Mostrar el nombre en el perfil
-      if (nombre) {
-        document.getElementById('nombrePerfil').textContent = nombre;
-      } else {
-        document.getElementById('nombrePerfil').textContent = "Nombre no disponible";
-      }
-
-      // Mostrar la contraseña (aunque esto no es seguro, en una aplicación real deberías manejarlo de otra manera)
-      if (contrasena) {
-        document.getElementById('contrasenaPerfil').textContent = contrasena;
-      } else {
-        document.getElementById('contrasenaPerfil').textContent = "Contraseña no disponible";
-      }
-    }
-
-    // Llamar a la función cargarPerfil cuando la página esté completamente cargada
-    window.onload = cargarPerfil;
-  </script>
 </head>
 <body>
-  <!-- Header -->
   <header>
     <img src="logo.png" alt="Logo de la Escuela">
     <h1>Escuela Proa La Falda</h1>
     <p>Formando a los líderes del mañana</p>
   </header>
 
-  <!-- Navbar -->
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="proyectos.html">Proyectos</a>
-    <a href="intertribus.html">Intertribus</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="novedades.html">Novedades</a>
-    <a href="perfil.html">Perfil</a>
-    <a href="olimpiadas.html">Olimpiadas</a>
-    <a href="egresados.html">Egresados</a>
-  </nav>
-
-  <!-- Main Content -->
   <div class="container">
-    <section>
-      <h2 class="section-title">Mi Perfil</h2>
-      <div class="profile-info">
-        <div>
-          <label for="nombre">Nombre:</label>
-          <span id="nombrePerfil">Cargando...</span>
-        </div>
-        <div>
-          <label for="contrasena">Contraseña:</label>
-          <span id="contrasenaPerfil">Cargando...</span>
-        </div>
-      </div>
-    </section>
+    <h2 class="section-title">Bienvenido a tu perfil</h2>
+    <p class="text-center" id="nombreUsuario"></p>
+    <button onclick="cerrarSesion()">Cerrar sesión</button>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Escuela Proa La Falda. Todos los derechos reservados.</p>
-    <p><a href="mailto:info@escuelaabc.com">info@escuelasproa.edu.ar</a></p>
-  </footer>
+  <script>
+    // Obtener el usuario logueado desde localStorage
+    const usuarioLogueado = localStorage.getItem('usuarioLogueado');
+    
+    // Mostrar el nombre del usuario en la página
+    if (usuarioLogueado) {
+      document.getElementById('nombreUsuario').textContent = 'Hola, ' + usuarioLogueado;
+    } else {
+      window.location.href = 'login.html'; // Si no hay usuario logueado, redirigir al login
+    }
+
+    // Función para cerrar sesión
+    function cerrarSesion() {
+      localStorage.removeItem('usuarioLogueado');
+      window.location.href = 'login.html'; // Redirigir al login después de cerrar sesión
+    }
+  </script>
 </body>
 </html>
