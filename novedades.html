@@ -6,6 +6,7 @@
   <title>Escuela Proa La Falda - Novedades</title>
   <link rel="icon" href="logo.ico" type="image/x-icon">
   <style>
+    /* Estilos generales */
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
@@ -77,18 +78,18 @@
       font-weight: bold;
       text-align: center;
     }
-
   </style>
   <script>
-    // Función para cargar el contenido de novedades.txt desde GitHub
+    // Función que carga el contenido de novedades.txt desde GitHub sin usar caché
     function cargarNovedades() {
       const listaNovedades = document.getElementById('listaNovedades');
       const errorMessage = document.getElementById('errorMessage');
       
-      // Agregar un parámetro único para evitar que el navegador cachee la respuesta
+      // Construir la URL agregando un parámetro único para evitar el caché a nivel CDN
       const url = 'https://raw.githubusercontent.com/cproa/cproa.github.io/main/novedades.txt?nocache=' + new Date().getTime();
 
-      fetch(url)  // Asegúrate de que esta URL sea válida
+      // Usamos fetch con la opción {cache: 'no-store'} para forzar que no se almacene en caché la respuesta
+      fetch(url, { cache: 'no-store' })
         .then(response => {
           if (!response.ok) {
             throw new Error('No se pudo cargar el archivo de novedades');
@@ -96,18 +97,19 @@
           return response.text();
         })
         .then(data => {
-          // Procesar el archivo y separar las novedades por saltos de línea
-          const novedades = data.split('\n').filter(line => line.trim() !== '');  // Filtrar líneas vacías
-          listaNovedades.innerHTML = ""; // Limpiar la lista antes de cargar
+          // Separa las novedades por líneas y elimina las líneas vacías
+          const novedades = data.split('\n').filter(line => line.trim() !== '');
+          listaNovedades.innerHTML = ''; // Limpia el contenido previo
 
           if (novedades.length === 0) {
             listaNovedades.innerHTML = '<p>No hay novedades disponibles en este momento.</p>';
           } else {
+            // Por cada novedad, crea un contenedor y lo agrega al DOM
             novedades.forEach(novedad => {
               const div = document.createElement('div');
               div.classList.add('novedad');
-              // Usamos innerHTML para procesar los saltos de línea y mostrar texto correctamente
-              div.innerHTML = novedad.replace(/\n/g, '<br>');  // Reemplazar saltos de línea con <br>
+              // Reemplaza saltos de línea por etiquetas <br> para mantener el formato
+              div.innerHTML = novedad.replace(/\n/g, '<br>');
               listaNovedades.appendChild(div);
             });
           }
@@ -118,8 +120,8 @@
         });
     }
 
-    // Cargar las novedades al cargar la página
-    window.onload = cargarNovedades; // Asegurarse de que se carguen al cargar la página
+    // Se carga la función al iniciar la página
+    window.onload = cargarNovedades;
   </script>
 </head>
 <body>
@@ -134,7 +136,7 @@
     <section class="novedades-container">
       <h3>Mensajes:</h3>
       <div id="listaNovedades">
-        <!-- Las novedades se mostrarán aquí -->
+        <!-- Aquí se insertarán las novedades -->
       </div>
       <div id="errorMessage" class="error-message"></div>
     </section>
