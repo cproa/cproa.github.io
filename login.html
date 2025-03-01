@@ -86,9 +86,24 @@
   <script>
     // Simulamos el archivo JSON que contiene los usuarios y contraseñas
     const usuarios = {
-      "andres gabriel morillo figueroa": "2277",
-      "ariel valentin ruizdiaz": "1messigay5"
+    "andres gabriel morillo figueroa": {
+      id: 0,
+      contraseña: "2277",
+      nombreCompleto: "Andres Gabriel Morillo Figueroa",
+      añoCursando: 4, // Año que está cursando
+      comportamiento: "bueno", // Curso que está tomando
+      correo: "agmorillofigueroa@escuelasproa.edu.ar" // Correo del usuario (puedes agregar más propiedades)
+      },
+    "ariel valentin ruizdiaz": {
+      id: 1,
+      contraseña: "1messigay5",
+      nombreCompleto: "Ariel Valentin Ruiz Diaz",
+      añoCursando: 4, // Año que está cursando
+      comportamiento: "bueno", // Curso que está tomando
+      correo: "example@escuelasproa.edua.ar" // Correo del usuario
+      }
     };
+
 
     // Función para manejar el inicio de sesión
     function iniciarSesion() {
