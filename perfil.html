@@ -42,6 +42,14 @@
       margin: 0.5rem 0;
     }
 
+    /* Nueva clase para el nombre del usuario en el header */
+    .nombre-usuario {
+      position: absolute;
+      top: 2rem;
+      right: 1rem;
+      font-size: 1.5rem;
+    }
+
     .container {
       padding: 2rem;
       max-width: 500px;
@@ -87,6 +95,8 @@
     <img src="logo.png" alt="Logo de la Escuela">
     <h1>Escuela Proa La Falda</h1>
     <p>Formando a los líderes del mañana</p>
+    <!-- Aquí se agregará el nombre del usuario -->
+    <div class="nombre-usuario" id="nombreUsuarioHeader"></div>
   </header>
 
   <div class="container">
@@ -112,6 +122,9 @@
       document.getElementById('añoCursando').textContent = 'Año Cursando: ' + usuarioLogueado.añoCursando;
       document.getElementById('comportamiento').textContent = 'Comportamiento: ' + usuarioLogueado.comportamiento;
       document.getElementById('correo').textContent = 'Correo: ' + usuarioLogueado.correo;
+
+      // Mostrar el nombre del usuario en el header
+      document.getElementById('nombreUsuarioHeader').textContent = usuarioLogueado.nombreCompleto;
     } else {
       window.location.href = 'login.html'; // Si no hay usuario logueado, redirigir al login
     }
