@@ -98,8 +98,17 @@
       // Mostrar el mensaje de carga
       loadingMessage.style.display = 'block';
 
-      fetch(url)  // Asegúrate de que esta URL sea válida
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache',  // No almacenar en caché
+          'Pragma': 'no-cache',         // No almacenar en caché
+          'Expires': '0'                // No almacenar en caché
+        }
+      })
         .then(response => {
+          // Verificar si la respuesta es válida
+          console.log('Respuesta del servidor:', response);
           if (!response.ok) {
             throw new Error('No se pudo cargar el archivo de novedades');
           }
@@ -108,6 +117,8 @@
         .then(data => {
           // Ocultar el mensaje de carga una vez que los datos se hayan cargado
           loadingMessage.style.display = 'none';
+          
+          console.log('Datos cargados:', data);  // Ver los datos en la consola
           
           // Procesar el archivo y separar las novedades por saltos de línea
           const novedades = data.split('\n').filter(line => line.trim() !== '');  // Filtrar líneas vacías
@@ -120,7 +131,7 @@
               const div = document.createElement('div');
               div.classList.add('novedad');
               // Usamos innerHTML para procesar los saltos de línea y mostrar texto correctamente
-              div.innerHTML = novedad.replace(/\n/g, '<br>');  // Reemplazar saltos de línea con <br>
+              div.innerHTML = novedad.replace(/\n/g, '<br>');
               listaNovedades.appendChild(div);
             });
           }
