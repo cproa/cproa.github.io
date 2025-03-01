@@ -26,29 +26,6 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-    .form-publicacion {
-      margin-bottom: 20px;
-    }
-    textarea {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-    }
-    button {
-      background-color: #72c5ff;
-      color: white;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #4a90e2;
-    }
     .novedades-container {
       margin-top: 30px;
     }
@@ -70,13 +47,6 @@
   <div class="container">
     <h2>Novedades</h2>
     
-    <!-- Formulario de publicación -->
-    <section class="form-publicacion">
-      <h3>Publicar Novedad</h3>
-      <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
-      <button onclick="publicarNovedad()">Publicar</button>
-    </section>
-
     <!-- Novedades publicadas -->
     <section class="novedades-container">
       <h3>Mensajes:</h3>
@@ -87,37 +57,23 @@
   </div>
 
   <script>
-    // Función para cargar las novedades desde localStorage
+    // Función para cargar el contenido de novedades.txt
     function cargarNovedades() {
-      const novedades = JSON.parse(localStorage.getItem('novedades')) || [];
-      const listaNovedades = document.getElementById('listaNovedades');
-      listaNovedades.innerHTML = ""; // Limpiar la lista antes de cargar
+      fetch('https://raw.githubusercontent.com/tu-usuario/tu-repositorio/main/novedades.txt')  // Asegúrate de cambiar esta URL con la tuya
+        .then(response => response.text())
+        .then(data => {
+          const novedades = data.split('\n').filter(line => line.trim() !== '');
+          const listaNovedades = document.getElementById('listaNovedades');
+          listaNovedades.innerHTML = ""; // Limpiar la lista antes de cargar
 
-      novedades.forEach(novedad => {
-        const div = document.createElement('div');
-        div.classList.add('novedad');
-        div.textContent = novedad;
-        listaNovedades.appendChild(div);
-      });
-    }
-
-    // Función para publicar una novedad
-    function publicarNovedad() {
-      const mensaje = document.getElementById('mensaje').value;
-      if (mensaje.trim() !== "") {
-        // Guardar la novedad en localStorage
-        let novedades = JSON.parse(localStorage.getItem('novedades')) || [];
-        novedades.push(mensaje);
-        localStorage.setItem('novedades', JSON.stringify(novedades));
-
-        // Limpiar el campo de mensaje
-        document.getElementById('mensaje').value = "";
-
-        // Recargar las novedades
-        cargarNovedades();
-      } else {
-        alert('Escribe un mensaje antes de publicar');
-      }
+          novedades.forEach(novedad => {
+            const div = document.createElement('div');
+            div.classList.add('novedad');
+            div.textContent = novedad;
+            listaNovedades.appendChild(div);
+          });
+        })
+        .catch(error => console.error('Error al cargar las novedades:', error));
     }
 
     // Cargar las novedades al cargar la página
