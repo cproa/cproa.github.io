@@ -102,28 +102,29 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
+    /* Colores diferentes para cada tarjeta */
     .card-1 {
-      background-color: #6ab4ff;
+      background-color: rgba(95, 165, 255, 0.9); /* Azul claro */
     }
 
     .card-2 {
-      background-color: #f1c40f;
+      background-color: rgba(255, 155, 95, 0.9); /* Naranja */
     }
 
     .card-3 {
-      background-color: #e74c3c;
+      background-color: rgba(95, 255, 95, 0.9); /* Verde */
     }
 
     .card-4 {
-      background-color: #2ecc71;
+      background-color: rgba(255, 95, 95, 0.9); /* Rojo */
     }
 
     .card-5 {
-      background-color: #8e44ad;
+      background-color: rgba(255, 95, 255, 0.9); /* Rosa */
     }
 
     .card-6 {
-      background-color: #2c3e50;
+      background-color: rgba(95, 95, 255, 0.9); /* Azul */
     }
 
     .card:hover {
@@ -134,6 +135,18 @@
     .card h3 {
       margin: 1rem 0;
       color: white;
+    }
+
+    /* Estilos para los enlaces dentro de las tarjetas */
+    .card a {
+      color: white; /* Texto blanco */
+      text-decoration: none; /* Sin subrayado */
+      display: block; /* Para que el área del enlace sea toda la tarjeta */
+    }
+
+    .card a:hover {
+      color: white; /* No cambiar color al pasar el ratón */
+      background-color: rgba(0, 0, 0, 0.2); /* Un pequeño cambio de color de fondo */
     }
 
     footer {
