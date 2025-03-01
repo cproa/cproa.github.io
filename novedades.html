@@ -182,12 +182,10 @@
     // Función para leer el archivo 'novedades.txt' y mostrar los mensajes
     function cargarNovedades() {
       // Simulamos la lectura del archivo con el siguiente contenido:
-      const contenidoArchivo = `hola\como\estan\
-gente\hoy\no\hay\clases\
-buenos\dias`;
+      const contenidoArchivo = `hola gente como estan;buen dia gente;excelente dia`;
 
-      // Convertimos el contenido del archivo en un arreglo de mensajes
-      const novedades = contenidoArchivo.split('\n');
+      // Convertimos el contenido del archivo en un arreglo de mensajes usando ";" como separador
+      const novedades = contenidoArchivo.split(';');
       
       // Mostrar las novedades
       const listaNovedades = document.getElementById('listaNovedades');
@@ -197,10 +195,8 @@ buenos\dias`;
         const div = document.createElement('div');
         div.classList.add('novedad');
         
-        // Reemplazamos el delimitador \ para dividir los mensajes
-        const mensajes = novedad.split('\\').join('<br>');
-        
-        div.innerHTML = mensajes;
+        // Mostrar cada novedad separada correctamente
+        div.innerHTML = novedad;
         listaNovedades.appendChild(div);
       });
     }
