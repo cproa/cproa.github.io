@@ -78,14 +78,27 @@
       text-align: center;
     }
 
+    #loadingMessage {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #007bff;
+    }
+
   </style>
   <script>
-    // Función para cargar el contenido de novedades.txt desde GitHub
+    // Función para cargar el contenido de novedades.txt desde GitHub sin caché
     function cargarNovedades() {
       const listaNovedades = document.getElementById('listaNovedades');
       const errorMessage = document.getElementById('errorMessage');
+      const loadingMessage = document.getElementById('loadingMessage');
       
-      fetch('https://raw.githubusercontent.com/cproa/cproa.github.io/main/novedades.txt')  // Asegúrate de que esta URL sea válida
+      // Agregar un parámetro de timestamp para evitar caché
+      const url = 'https://raw.githubusercontent.com/cproa/cproa.github.io/main/novedades.txt?timestamp=' + new Date().getTime();
+
+      // Mostrar el mensaje de carga
+      loadingMessage.style.display = 'block';
+
+      fetch(url)  // Asegúrate de que esta URL sea válida
         .then(response => {
           if (!response.ok) {
             throw new Error('No se pudo cargar el archivo de novedades');
@@ -93,6 +106,9 @@
           return response.text();
         })
         .then(data => {
+          // Ocultar el mensaje de carga una vez que los datos se hayan cargado
+          loadingMessage.style.display = 'none';
+          
           // Procesar el archivo y separar las novedades por saltos de línea
           const novedades = data.split('\n').filter(line => line.trim() !== '');  // Filtrar líneas vacías
           listaNovedades.innerHTML = ""; // Limpiar la lista antes de cargar
@@ -110,6 +126,8 @@
           }
         })
         .catch(error => {
+          // Ocultar el mensaje de carga y mostrar el mensaje de error
+          loadingMessage.style.display = 'none';
           console.error('Error al cargar las novedades:', error);
           errorMessage.textContent = 'Hubo un problema al cargar las novedades. Intenta nuevamente más tarde.';
         });
@@ -130,6 +148,7 @@
     <h2 class="section-title">Novedades</h2>
     <section class="novedades-container">
       <h3>Mensajes:</h3>
+      <div id="loadingMessage" style="display: none;">Cargando novedades...</div>
       <div id="listaNovedades">
         <!-- Las novedades se mostrarán aquí -->
       </div>
