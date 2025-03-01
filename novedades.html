@@ -79,50 +79,6 @@
       text-align: center;
     }
   </style>
-  <script>
-    // Función que carga el contenido de novedades.txt desde GitHub sin usar caché
-    function cargarNovedades() {
-      const listaNovedades = document.getElementById('listaNovedades');
-      const errorMessage = document.getElementById('errorMessage');
-      
-      // Construir la URL agregando un parámetro único para evitar el caché a nivel CDN
-      const url = 'https://raw.githubusercontent.com/cproa/cproa.github.io/main/novedades.txt?nocache=' + new Date().getTime();
-
-      // Usamos fetch con la opción {cache: 'no-store'} para forzar que no se almacene en caché la respuesta
-      fetch(url, { cache: 'no-store' })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('No se pudo cargar el archivo de novedades');
-          }
-          return response.text();
-        })
-        .then(data => {
-          // Separa las novedades por líneas y elimina las líneas vacías
-          const novedades = data.split('\n').filter(line => line.trim() !== '');
-          listaNovedades.innerHTML = ''; // Limpia el contenido previo
-
-          if (novedades.length === 0) {
-            listaNovedades.innerHTML = '<p>No hay novedades disponibles en este momento.</p>';
-          } else {
-            // Por cada novedad, crea un contenedor y lo agrega al DOM
-            novedades.forEach(novedad => {
-              const div = document.createElement('div');
-              div.classList.add('novedad');
-              // Reemplaza saltos de línea por etiquetas <br> para mantener el formato
-              div.innerHTML = novedad.replace(/\n/g, '<br>');
-              listaNovedades.appendChild(div);
-            });
-          }
-        })
-        .catch(error => {
-          console.error('Error al cargar las novedades:', error);
-          errorMessage.textContent = 'Hubo un problema al cargar las novedades. Intenta nuevamente más tarde.';
-        });
-    }
-
-    // Se carga la función al iniciar la página
-    window.onload = cargarNovedades;
-  </script>
 </head>
 <body>
   <header>
@@ -135,9 +91,11 @@
     <h2 class="section-title">Novedades</h2>
     <section class="novedades-container">
       <h3>Mensajes:</h3>
+      <!-- INICIO_NOVEDADES -->
       <div id="listaNovedades">
-        <!-- Aquí se insertarán las novedades -->
+        <div class="novedad">Mensaje inicial</div>
       </div>
+      <!-- FIN_NOVEDADES -->
       <div id="errorMessage" class="error-message"></div>
     </section>
   </div>
