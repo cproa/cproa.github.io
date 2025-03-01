@@ -84,7 +84,8 @@
     function cargarNovedades() {
       const listaNovedades = document.getElementById('listaNovedades');
       const errorMessage = document.getElementById('errorMessage');
-      fetch('https://raw.githubusercontent.com/cproa/cproa.github.io/main/novedades.txt')  // Asegúrate de cambiar esta URL con la tuya
+      
+      fetch('https://raw.githubusercontent.com/cproa/cproa.github.io/main/novedades.txt')  // Asegúrate de que esta URL sea válida
         .then(response => {
           if (!response.ok) {
             throw new Error('No se pudo cargar el archivo de novedades');
@@ -113,7 +114,7 @@
     }
 
     // Cargar las novedades al cargar la página
-    cargarNovedades();
+    window.onload = cargarNovedades; // Asegurarse de que se carguen al cargar la página
   </script>
 </head>
 <body>
