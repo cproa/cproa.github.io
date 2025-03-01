@@ -91,15 +91,17 @@
         nombreCompleto: "Andrés Gabriel Morillo Figueroa",
         añoCursando: 4,
         comportamiento: "exelente",
-        correo: "agmorillofigueroa@escuelasproa.edu.ar"
+        correo: "agmorillofigueroa@escuelasproa.edu.ar",
+        OP: true  // Variable OP para este usuario
       },
-      "50245080": { // Simulamos otro usuario con DNI
+      "50245080": { 
         id: 1,
         contraseña: "1messigay5",
         nombreCompleto: "Ariel Valentin Ruizdiaz",
         añoCursando: 4,
         comportamiento: "nefasto",
-        correo: "avruizdiaz@escuelasproa.edu.ar"
+        correo: "avruizdiaz@escuelasproa.edu.ar",
+        OP: false  // Variable OP para este usuario
       },
       "49757518": {
         id: 2,
@@ -107,7 +109,8 @@
         nombreCompleto: "Lautaro Otto Breininger",
         añoCursando: 4,
         comportamiento: "autista",
-        correo: "lbreininger@escuelasproa.edu.ar"
+        correo: "lbreininger@escuelasproa.edu.ar",
+        OP: true  // Variable OP para este usuario
       },
       "51420730": {
         id: 3,
@@ -115,7 +118,8 @@
         nombreCompleto: "Safir Tiziano Ceballos",
         añoCursando: 2,
         comportamiento: "Regular",
-        correo: "schavezceballos@escuelasproa.edu.ar"
+        correo: "schavezceballos@escuelasproa.edu.ar",
+        OP: false  // Variable OP para este usuario
       }
     };
 
@@ -126,9 +130,15 @@
 
       // Verificar si el nombre de usuario (DNI) existe y si la contraseña es correcta
       if (usuarios[nombre] && usuarios[nombre].contraseña === contrasena) {
-        // Guardar al usuario logueado en el localStorage
-        localStorage.setItem('usuarioLogueado', JSON.stringify(usuarios[nombre]));
-        alert('Bienvenido ' + usuarios[nombre].nombreCompleto);
+        // Guardar al usuario logueado en el localStorage, junto con la variable OP
+        const usuarioLogueado = usuarios[nombre];
+        localStorage.setItem('usuarioLogueado', JSON.stringify(usuarioLogueado));
+
+        alert('Bienvenido ' + usuarioLogueado.nombreCompleto);
+        
+        // Aquí puedes hacer lo que quieras con la variable OP, por ejemplo:
+        console.log('Variable OP para este usuario:', usuarioLogueado.OP);
+
         window.location.href = 'perfil.html'; // Redirigir al perfil
       } else {
         alert('Nombre de usuario o contraseña incorrectos');
