@@ -1,24 +1,143 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contenido del archivo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escuela Proa La Falda - Novedades</title>
+  <link rel="icon" href="logo.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('fondo3.avif');
+      background-size: cover;
+      background-position: center;
+    }
+
+    header {
+      background-color: rgba(0, 151, 255, 0.8);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      position: relative;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin: 2rem;
+    }
+
+    header img {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      height: 50px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0.5rem 0;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 3rem auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #004170;
+    }
+
+    .novedades-container {
+      margin-top: 30px;
+    }
+
+    .novedad {
+      background-color: #f1f1f1;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .error-message {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+    }
+
+  </style>
+  <script>
+    // Función para cargar el contenido de novedades.txt desde GitHub
+    function cargarNovedades() {
+      const listaNovedades = document.getElementById('listaNovedades');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      // Agregar un parámetro único para evitar que el navegador cachee la respuesta
+      const url = 'https://raw.githubusercontent.com/cproa/cproa.github.io/main/novedades.txt?nocache=' + new Date().getTime();
+
+      fetch(url)  // Asegúrate de que esta URL sea válida
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('No se pudo cargar el archivo de novedades');
+          }
+          return response.text();
+        })
+        .then(data => {
+          // Procesar el archivo y separar las novedades por saltos de línea
+          const novedades = data.split('\n').filter(line => line.trim() !== '');  // Filtrar líneas vacías
+          listaNovedades.innerHTML = ""; // Limpiar la lista antes de cargar
+
+          if (novedades.length === 0) {
+            listaNovedades.innerHTML = '<p>No hay novedades disponibles en este momento.</p>';
+          } else {
+            novedades.forEach(novedad => {
+              const div = document.createElement('div');
+              div.classList.add('novedad');
+              // Usamos innerHTML para procesar los saltos de línea y mostrar texto correctamente
+              div.innerHTML = novedad.replace(/\n/g, '<br>');  // Reemplazar saltos de línea con <br>
+              listaNovedades.appendChild(div);
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error al cargar las novedades:', error);
+          errorMessage.textContent = 'Hubo un problema al cargar las novedades. Intenta nuevamente más tarde.';
+        });
+    }
+
+    // Cargar las novedades al cargar la página
+    window.onload = cargarNovedades; // Asegurarse de que se carguen al cargar la página
+  </script>
 </head>
 <body>
-    <h1>Contenido del archivo novedades.txt</h1>
-    <div id="contenido"></div>
+  <header>
+    <img src="logo.png" alt="Logo de la Escuela">
+    <h1>Escuela Proa La Falda</h1>
+    <p>Formando a los líderes del mañana</p>
+  </header>
 
-    <?php
-        $archivo = 'novedades.txt'; // Nombre del archivo
-
-        // Verificamos si el archivo existe y luego lo leemos
-        if (file_exists($archivo)) {
-            $contenido = file_get_contents($archivo);
-            echo "<div id='contenido'>$contenido</div>";
-        } else {
-            echo "<p>El archivo no existe o no se puede leer.</p>";
-        }
-    ?>
+  <div class="container">
+    <h2 class="section-title">Novedades</h2>
+    <section class="novedades-container">
+      <h3>Mensajes:</h3>
+      <div id="listaNovedades">
+        <!-- Las novedades se mostrarán aquí -->
+      </div>
+      <div id="errorMessage" class="error-message"></div>
+    </section>
+  </div>
 </body>
 </html>
