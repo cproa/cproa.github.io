@@ -3,12 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Escuela Proa La Falda</title>
+  <title>Escuela Proa La Falda - Novedades</title>
   <link rel="icon" href="logo.ico" type="image/x-icon">
   <style>
-    /* Agregar los estilos previos aquí... */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('fondo3.avif');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
 
-    /* Estilos para el formulario de publicación */
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
     .form-publicacion {
       margin-top: 20px;
       background-color: rgba(255, 255, 255, 0.8);
@@ -52,66 +78,42 @@
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
+
+    /* Estilo para los mensajes */
+    .novedad {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <img src="logo.png" alt="Logo de la Escuela">
-    <h1>Escuela Proa La Falda</h1>
-    <p>Formando a los líderes del mañana</p>
-    <div class="nombre-usuario" id="nombreUsuarioHeader"></div>
-  </header>
-
-  <!-- Navbar -->
-  <nav>
-    <a href="#">Inicio</a>
-    <a href="proyectos.html">Proyectos</a>
-    <a href="intertribus.html">Intertribus</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="novedades.html">Novedades</a>
-    <a href="perfil.html">Perfil</a>
-    <a href="olimpiadas.html">Olimpiadas</a>
-    <a href="egresados.html">Egresados</a>
-    <a href="egresados.html">⭕EN VIVO</a>
-  </nav>
-
-  <!-- Main Content -->
   <div class="container">
-    <!-- Sección para publicaciones (solo OP=true) -->
+    <h1>Novedades</h1>
+    
+    <!-- Formulario de publicación -->
     <section class="form-publicacion" id="formPublicacion" style="display:none;">
-      <h2 class="section-title">Publicar Novedad</h2>
+      <h2>Publicar Novedad</h2>
       <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
       <button onclick="publicarNovedad()">Publicar</button>
     </section>
 
     <!-- Novedades publicadas -->
     <section class="novedades">
-      <h2 class="section-title">Novedades</h2>
+      <h2>Mensajes</h2>
       <div id="listaNovedades">
         <!-- Las novedades se mostrarán aquí -->
       </div>
     </section>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Escuela Proa La Falda. Todos los derechos reservados.</p>
-    <p><a href="mailto:info@escuelaabc.com">info@escuelasproa.edu.ar</a></p>
-  </footer>
-
   <script>
     // Obtener el usuario logueado desde localStorage
     const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
 
-    // Mostrar el nombre del usuario en el header si está logueado
-    if (usuarioLogueado) {
-      document.getElementById('nombreUsuarioHeader').textContent = usuarioLogueado.nombreCompleto;
-
-      // Verificar si el usuario tiene OP=true para mostrar el formulario de publicación
-      if (usuarioLogueado.OP === true) {
-        document.getElementById('formPublicacion').style.display = 'block';
-      }
+    // Verificar si hay usuario logueado y si tiene rango OP=true
+    if (usuarioLogueado && usuarioLogueado.OP === true) {
+      // Mostrar formulario para publicar novedades
+      document.getElementById('formPublicacion').style.display = 'block';
     }
 
     // Función para publicar una novedad
@@ -120,10 +122,10 @@
       if (mensaje.trim() !== "") {
         // Obtener las novedades guardadas en el localStorage
         let novedades = JSON.parse(localStorage.getItem('novedades')) || [];
-        
+
         // Agregar la nueva novedad
         novedades.push(mensaje);
-        
+
         // Guardar las novedades actualizadas en localStorage
         localStorage.setItem('novedades', JSON.stringify(novedades));
 
@@ -148,7 +150,11 @@
       novedades.forEach(novedad => {
         const div = document.createElement('div');
         div.classList.add('novedad');
-        div.textContent = novedad;
+
+        // Reemplazamos el delimitador \ para dividir los mensajes
+        const mensajes = novedad.split('\\').join('<br>');
+
+        div.innerHTML = mensajes;
         listaNovedades.appendChild(div);
       });
     }
