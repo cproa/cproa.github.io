@@ -13,26 +13,85 @@
       background-image: url('fondo3.avif');
       background-size: cover;
       background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: #333;
+    }
+
+    header {
+      background-color: rgba(0, 151, 255, 0.8);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      position: relative;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin: 2rem;
+    }
+
+    header img {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      height: 50px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0.5rem 0;
     }
 
     .container {
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
       max-width: 600px;
-      width: 100%;
+      margin: 3rem auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
-    h1 {
+    .section-title {
       text-align: center;
       font-size: 2rem;
-      margin-bottom: 20px;
+      margin-bottom: 1rem;
+      color: #004170;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #72c5ff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #4a90e2;
+    }
+
+    .novedades-container {
+      margin-top: 30px;
+    }
+
+    .novedad {
+      background-color: #f1f1f1;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .form-publicacion {
@@ -66,30 +125,18 @@
     .form-publicacion button:hover {
       background-color: #4a90e2;
     }
-
-    .novedades {
-      margin-top: 30px;
-    }
-
-    .novedad {
-      background-color: #f1f1f1;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Estilo para los mensajes */
-    .novedad {
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
   </style>
 </head>
 <body>
+  <header>
+    <img src="logo.png" alt="Logo de la Escuela">
+    <h1>Escuela Proa La Falda</h1>
+    <p>Formando a los líderes del mañana</p>
+  </header>
+
   <div class="container">
-    <h1>Novedades</h1>
-    
+    <h2 class="section-title">Novedades</h2>
+
     <!-- Formulario de publicación -->
     <section class="form-publicacion" id="formPublicacion" style="display:none;">
       <h2>Publicar Novedad</h2>
@@ -98,7 +145,7 @@
     </section>
 
     <!-- Novedades publicadas -->
-    <section class="novedades">
+    <section class="novedades-container">
       <h2>Mensajes</h2>
       <div id="listaNovedades">
         <!-- Las novedades se mostrarán aquí -->
@@ -107,8 +154,11 @@
   </div>
 
   <script>
-    // Obtener el usuario logueado desde localStorage
-    const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
+    // Simulación de usuario logueado con OP = true
+    const usuarioLogueado = {
+      nombreCompleto: "Andrés Gabriel Morillo Figueroa",
+      OP: true // Establecemos OP como true
+    };
 
     // Verificar si hay usuario logueado y si tiene rango OP=true
     if (usuarioLogueado && usuarioLogueado.OP === true) {
@@ -120,47 +170,43 @@
     function publicarNovedad() {
       const mensaje = document.getElementById('mensaje').value;
       if (mensaje.trim() !== "") {
-        // Obtener las novedades guardadas en el localStorage
-        let novedades = JSON.parse(localStorage.getItem('novedades')) || [];
-
-        // Agregar la nueva novedad
-        novedades.push(mensaje);
-
-        // Guardar las novedades actualizadas en localStorage
-        localStorage.setItem('novedades', JSON.stringify(novedades));
-
+        // Aquí se puede agregar código para guardar la novedad en un archivo o base de datos
+        console.log("Novedad publicada: ", mensaje);
         // Limpiar el campo de mensaje
         document.getElementById('mensaje').value = "";
-
-        // Mostrar las novedades actualizadas
-        mostrarNovedades();
       } else {
         alert('Escribe un mensaje antes de publicar');
       }
     }
 
-    // Función para mostrar las novedades
-    function mostrarNovedades() {
-      const listaNovedades = document.getElementById('listaNovedades');
-      let novedades = JSON.parse(localStorage.getItem('novedades')) || [];
+    // Función para leer el archivo 'novedades.txt' y mostrar los mensajes
+    function cargarNovedades() {
+      // Simulamos la lectura del archivo con el siguiente contenido:
+      const contenidoArchivo = `hola\como\estan\
+gente\hoy\no\hay\clases\
+buenos\dias`;
 
+      // Convertimos el contenido del archivo en un arreglo de mensajes
+      const novedades = contenidoArchivo.split('\n');
+      
+      // Mostrar las novedades
+      const listaNovedades = document.getElementById('listaNovedades');
       listaNovedades.innerHTML = ""; // Limpiar la lista de novedades
 
-      // Mostrar cada novedad
       novedades.forEach(novedad => {
         const div = document.createElement('div');
         div.classList.add('novedad');
-
+        
         // Reemplazamos el delimitador \ para dividir los mensajes
         const mensajes = novedad.split('\\').join('<br>');
-
+        
         div.innerHTML = mensajes;
         listaNovedades.appendChild(div);
       });
     }
 
-    // Mostrar las novedades al cargar la página
-    mostrarNovedades();
+    // Cargar las novedades al cargar la página
+    cargarNovedades();
   </script>
 </body>
 </html>
