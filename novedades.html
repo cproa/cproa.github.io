@@ -59,7 +59,7 @@
   <script>
     // Función para cargar el contenido de novedades.txt
     function cargarNovedades() {
-      fetch('https://raw.githubusercontent.com/tu-usuario/tu-repositorio/main/novedades.txt')  // Asegúrate de cambiar esta URL con la tuya
+      fetch('https://raw.githubusercontent.com/cproa/cproa.github.io/main/novedades.txt')  // Asegúrate de cambiar esta URL con la tuya
         .then(response => response.text())
         .then(data => {
           const novedades = data.split('\n').filter(line => line.trim() !== '');
