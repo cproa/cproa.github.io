@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horarios - Escuela Proa La Falda</title>
+  <link rel="icon" href="logo.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('fondo3.avif');
+      background-size: cover;
+      background-position: center;
+    }
+
+    header {
+      background-color: rgba(0, 151, 255, 0.8);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      position: relative;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin: 2rem;
+    }
+
+    header img {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      height: 50px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0.5rem 0;
+    }
+
+    .nombre-usuario {
+      position: absolute;
+      top: 2rem;
+      right: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 900px;
+      margin: 3rem auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #004170;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    button {
+      background-color: #72c5ff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #4a90e2;
+    }
+
+    /* Estilo para la imagen de horarios */
+    .horarios-img {
+      display: block;
+      margin: 0 auto; /* Centra la imagen */
+      width: 80%; /* Agranda la imagen ajustando el tamaño a un 80% del ancho del contenedor */
+      max-width: 900px; /* Ajusta el tamaño máximo de la imagen */
+    }
+
+    .horarios-text {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #004170;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo de la Escuela">
+    <h1>Escuela Proa La Falda</h1>
+    <p>Formando a los líderes del mañana</p>
+    <!-- Mostrar el nombre del usuario logueado -->
+    <div class="nombre-usuario" id="nombreUsuarioHeader"></div>
+  </header>
+
+  <div class="container">
+    <h2 class="section-title">Horarios</h2>
+
+    <!-- Imagen de horarios -->
+    <img src="hr 2do.png" alt="Horarios" class="horarios-img">
+
+    <!-- Texto informativo sobre los horarios -->
+    <div class="horarios-text">
+      <p>Consulta los horarios de clases y actividades aquí. Mantente al tanto de los cambios y actualizaciones.</p>
+    </div>
+
+    <button onclick="regresar()">Volver al inicio</button>
+  </div>
+
+  <script>
+    // Obtener el usuario logueado desde localStorage
+    const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
+    
+    // Mostrar el nombre del usuario en el header si está logueado
+    if (usuarioLogueado) {
+      document.getElementById('nombreUsuarioHeader').textContent = usuarioLogueado.nombreCompleto;
+    }
+
+    // Función para regresar al inicio
+    function regresar() {
+      window.location.href = 'index.html'; // Redirigir a la página de inicio
+    }
+  </script>
+</body>
+</html>
