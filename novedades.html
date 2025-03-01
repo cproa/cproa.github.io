@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escuela Proa La Falda</title>
+  <link rel="icon" href="logo.ico" type="image/x-icon">
+  <style>
+    /* Agregar los estilos previos aquí... */
+
+    /* Estilos para el formulario de publicación */
+    .form-publicacion {
+      margin-top: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-publicacion textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .form-publicacion button {
+      width: 100%;
+      padding: 10px;
+      background-color: #72c5ff;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-publicacion button:hover {
+      background-color: #4a90e2;
+    }
+
+    .novedades {
+      margin-top: 30px;
+    }
+
+    .novedad {
+      background-color: #f1f1f1;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <img src="logo.png" alt="Logo de la Escuela">
+    <h1>Escuela Proa La Falda</h1>
+    <p>Formando a los líderes del mañana</p>
+    <div class="nombre-usuario" id="nombreUsuarioHeader"></div>
+  </header>
+
+  <!-- Navbar -->
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="intertribus.html">Intertribus</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="novedades.html">Novedades</a>
+    <a href="perfil.html">Perfil</a>
+    <a href="olimpiadas.html">Olimpiadas</a>
+    <a href="egresados.html">Egresados</a>
+    <a href="egresados.html">⭕EN VIVO</a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Sección para publicaciones (solo OP=true) -->
+    <section class="form-publicacion" id="formPublicacion" style="display:none;">
+      <h2 class="section-title">Publicar Novedad</h2>
+      <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
+      <button onclick="publicarNovedad()">Publicar</button>
+    </section>
+
+    <!-- Novedades publicadas -->
+    <section class="novedades">
+      <h2 class="section-title">Novedades</h2>
+      <div id="listaNovedades">
+        <!-- Las novedades se mostrarán aquí -->
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Escuela Proa La Falda. Todos los derechos reservados.</p>
+    <p><a href="mailto:info@escuelaabc.com">info@escuelasproa.edu.ar</a></p>
+  </footer>
+
+  <script>
+    // Obtener el usuario logueado desde localStorage
+    const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
+
+    // Mostrar el nombre del usuario en el header si está logueado
+    if (usuarioLogueado) {
+      document.getElementById('nombreUsuarioHeader').textContent = usuarioLogueado.nombreCompleto;
+
+      // Verificar si el usuario tiene OP=true para mostrar el formulario de publicación
+      if (usuarioLogueado.OP === true) {
+        document.getElementById('formPublicacion').style.display = 'block';
+      }
+    }
+
+    // Función para publicar una novedad
+    function publicarNovedad() {
+      const mensaje = document.getElementById('mensaje').value;
+      if (mensaje.trim() !== "") {
+        // Obtener las novedades guardadas en el localStorage
+        let novedades = JSON.parse(localStorage.getItem('novedades')) || [];
+        
+        // Agregar la nueva novedad
+        novedades.push(mensaje);
+        
+        // Guardar las novedades actualizadas en localStorage
+        localStorage.setItem('novedades', JSON.stringify(novedades));
+
+        // Limpiar el campo de mensaje
+        document.getElementById('mensaje').value = "";
+
+        // Mostrar las novedades actualizadas
+        mostrarNovedades();
+      } else {
+        alert('Escribe un mensaje antes de publicar');
+      }
+    }
+
+    // Función para mostrar las novedades
+    function mostrarNovedades() {
+      const listaNovedades = document.getElementById('listaNovedades');
+      let novedades = JSON.parse(localStorage.getItem('novedades')) || [];
+
+      listaNovedades.innerHTML = ""; // Limpiar la lista de novedades
+
+      // Mostrar cada novedad
+      novedades.forEach(novedad => {
+        const div = document.createElement('div');
+        div.classList.add('novedad');
+        div.textContent = novedad;
+        listaNovedades.appendChild(div);
+      });
+    }
+
+    // Mostrar las novedades al cargar la página
+    mostrarNovedades();
+  </script>
+</body>
+</html>
