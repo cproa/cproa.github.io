@@ -10,138 +10,76 @@
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #f9f9f9;
     }
-
     header {
       background-color: rgba(0, 151, 255, 0.8);
       color: white;
       text-align: center;
       padding: 2rem 0;
-      border-radius: 20px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
-
-    header img {
-      height: 50px;
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-    }
-
-    header p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-    }
-
     .container {
-      padding: 2rem;
       max-width: 800px;
       margin: 2rem auto;
       background-color: white;
+      padding: 1rem;
       border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-
-    .section-title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #004170;
-    }
-
     .form-publicacion {
-      background-color: #fff;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
     }
-
-    .form-publicacion textarea {
+    textarea {
       width: 100%;
       padding: 10px;
       font-size: 1rem;
-      margin-bottom: 10px;
       border-radius: 5px;
       border: 1px solid #ccc;
+      margin-bottom: 10px;
     }
-
-    .form-publicacion button {
-      width: 100%;
-      padding: 10px;
+    button {
       background-color: #72c5ff;
       color: white;
+      padding: 10px 20px;
       font-size: 1rem;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
-
-    .form-publicacion button:hover {
+    button:hover {
       background-color: #4a90e2;
     }
-
     .novedades-container {
       margin-top: 30px;
     }
-
     .novedad {
-      background-color: #f9f9f9;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .novedad .mensaje {
-      font-size: 1.2rem;
-      color: #333;
+      background-color: #f1f1f1;
+      padding: 10px;
       margin-bottom: 10px;
-    }
-
-    .novedad .comentarios {
-      font-size: 1rem;
-      color: #555;
-    }
-
-    .comentario {
-      background-color: #e9e9e9;
-      padding: 8px;
-      margin-top: 10px;
-      border-radius: 8px;
-    }
-
-    .comentario .usuario {
-      font-weight: bold;
-    }
-
-    .comentario .texto {
-      margin-top: 5px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Logo de la Escuela">
     <h1>Escuela Proa La Falda</h1>
     <p>Formando a los líderes del mañana</p>
   </header>
 
   <div class="container">
-    <h2 class="section-title">Novedades</h2>
-
+    <h2>Novedades</h2>
+    
     <!-- Formulario de publicación -->
-    <section class="form-publicacion" id="formPublicacion" style="display:block;">
-      <h2>Publicar Novedad</h2>
+    <section class="form-publicacion">
+      <h3>Publicar Novedad</h3>
       <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
       <button onclick="publicarNovedad()">Publicar</button>
     </section>
 
     <!-- Novedades publicadas -->
     <section class="novedades-container">
-      <h2>Mensajes</h2>
+      <h3>Mensajes:</h3>
       <div id="listaNovedades">
         <!-- Las novedades se mostrarán aquí -->
       </div>
@@ -149,98 +87,37 @@
   </div>
 
   <script>
-    // Simulación de usuario logueado con OP = true
-    const usuarioLogueado = {
-      OP: true  // Para que puedan publicar solo los que tienen OP=true
-    };
+    // Función para cargar las novedades desde localStorage
+    function cargarNovedades() {
+      const novedades = JSON.parse(localStorage.getItem('novedades')) || [];
+      const listaNovedades = document.getElementById('listaNovedades');
+      listaNovedades.innerHTML = ""; // Limpiar la lista antes de cargar
 
-    // Verificar si hay usuario logueado y si tiene rango OP=true
-    if (usuarioLogueado && usuarioLogueado.OP === true) {
-      // Mostrar formulario para publicar novedades
-      document.getElementById('formPublicacion').style.display = 'block';
+      novedades.forEach(novedad => {
+        const div = document.createElement('div');
+        div.classList.add('novedad');
+        div.textContent = novedad;
+        listaNovedades.appendChild(div);
+      });
     }
 
     // Función para publicar una novedad
     function publicarNovedad() {
       const mensaje = document.getElementById('mensaje').value;
       if (mensaje.trim() !== "") {
-        // Agregar un ";" al principio del mensaje
-        const mensajeConSeparador = `; ${mensaje}`;
-
-        // Llamar a la función para actualizar el archivo en GitHub
-        actualizarNovedadesGitHub(mensajeConSeparador);
+        // Guardar la novedad en localStorage
+        let novedades = JSON.parse(localStorage.getItem('novedades')) || [];
+        novedades.push(mensaje);
+        localStorage.setItem('novedades', JSON.stringify(novedades));
 
         // Limpiar el campo de mensaje
         document.getElementById('mensaje').value = "";
+
+        // Recargar las novedades
+        cargarNovedades();
       } else {
         alert('Escribe un mensaje antes de publicar');
       }
-    }
-
-    // Función para llamar al backend y actualizar el archivo en GitHub
-    function actualizarNovedadesGitHub(mensaje) {
-      const tokenGitHub = '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';  // Token de acceso personal
-      const repo = 'cproa/cproa.github.io';  // Tu repositorio
-      const archivo = 'novedades.txt';  // El archivo que quieres actualizar
-
-      // Primero, obtienes el contenido actual del archivo
-      fetch(`https://api.github.com/repos/${repo}/contents/${archivo}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `token ${tokenGitHub}`
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        const contenidoActual = atob(data.content);  // Decodificar el contenido del archivo
-        const nuevoContenido = contenidoActual + mensaje;  // Añadir el nuevo mensaje
-
-        // Realizar un commit para actualizar el archivo
-        fetch(`https://api.github.com/repos/${repo}/contents/${archivo}`, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `token ${tokenGitHub}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            message: "Actualizar novedades",
-            content: btoa(nuevoContenido),  // Volver a codificar el contenido
-            sha: data.sha  // Obtener la SHA del archivo para el commit
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Archivo actualizado:', data);
-          // Recargar las novedades o hacer algo después de actualizar el archivo
-          cargarNovedades();
-        })
-        .catch(error => console.error('Error al actualizar el archivo en GitHub:', error));
-      })
-      .catch(error => console.error('Error al obtener el archivo de GitHub:', error));
-    }
-
-    // Función para cargar las novedades y mostrarlas en la página
-    function cargarNovedades() {
-      // Simulamos la lectura del archivo con el siguiente contenido:
-      const contenidoArchivo = `hola;como estan;
-gente;hoy no hay clases;
-buenos dias`;
-
-      const novedades = contenidoArchivo.split("\n"); // Dividimos por línea
-
-      const listaNovedades = document.getElementById("listaNovedades");
-      listaNovedades.innerHTML = ""; // Limpiar las novedades antes de mostrar nuevas
-
-      novedades.forEach((novedad, index) => {
-        const div = document.createElement("div");
-        div.classList.add("novedad");
-
-        // Usamos un separador `;` para dividir el mensaje
-        const mensajes = novedad.split(";").map(msg => `<p class="mensaje">${msg.trim()}</p>`).join("");
-
-        div.innerHTML = mensajes;
-        listaNovedades.appendChild(div);
-      });
     }
 
     // Cargar las novedades al cargar la página
