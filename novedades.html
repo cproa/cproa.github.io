@@ -98,19 +98,21 @@
       // Mostrar el mensaje de carga
       loadingMessage.style.display = 'block';
 
+      // Mostrar la URL para depuración
+      console.log('URL solicitada:', url);
+
       fetch(url, {
         method: 'GET',
         headers: {
           'Cache-Control': 'no-cache',  // No almacenar en caché
           'Pragma': 'no-cache',         // No almacenar en caché
           'Expires': '0'                // No almacenar en caché
-        }
-      })
+        })
         .then(response => {
-          // Verificar si la respuesta es válida
           console.log('Respuesta del servidor:', response);
           if (!response.ok) {
-            throw new Error('No se pudo cargar el archivo de novedades');
+            // Si la respuesta no es ok, mostramos el error exacto
+            throw new Error('Error al cargar el archivo. Estado HTTP: ' + response.status);
           }
           return response.text();
         })
