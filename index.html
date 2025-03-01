@@ -4,12 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Escuela Proa La Falda</title>
+  <!-- Icono de la pestaña -->
+  <link rel="icon" href="logo.ico" type="image/x-icon">
   <style>
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #ffffff;
+      background-image: url('fondo.jpg');
+      background-size: cover;
+      background-position: center;
     }
 
     header {
@@ -17,11 +21,24 @@
       color: white;
       text-align: center;
       padding: 2rem 0;
+      position: relative;
+    }
+
+    /* Logo en la esquina izquierda */
+    header img {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      height: 50px; /* Ajusta el tamaño del logo */
     }
 
     header h1 {
       font-size: 3rem;
       margin: 0;
+    }
+
+    header p {
+      margin: 0.5rem 0;
     }
 
     nav {
@@ -44,8 +61,10 @@
 
     .container {
       padding: 2rem;
-      max-width: 1100px;
+      max-width: 900px; /* Establecemos un ancho más estrecho */
       margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+      border-radius: 10px;
     }
 
     .section-title {
@@ -87,6 +106,8 @@
 <body>
   <!-- Header -->
   <header>
+    <!-- Logo de la escuela en la esquina superior izquierda -->
+    <img src="logo.png" alt="Logo de la Escuela">
     <h1>Escuela Proa La Falda</h1>
     <p>Formando a los líderes del mañana</p>
   </header>
@@ -104,7 +125,7 @@
     <!-- Misión y Visión -->
     <section>
       <h2 class="section-title">Nuestra Misión</h2>
-      <p class="text-center">En la Escuela ABC nos dedicamos a proporcionar una educación de calidad, desarrollando habilidades que preparan a los estudiantes para los retos del futuro.</p>
+      <p class="text-center">En la Escuela Proa La Falda nos dedicamos a proporcionar una educación de calidad, desarrollando habilidades que preparan a los estudiantes para los retos del futuro.</p>
     </section>
 
     <!-- Cursos -->
