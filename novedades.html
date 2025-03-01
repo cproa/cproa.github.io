@@ -80,7 +80,7 @@
 
   </style>
   <script>
-    // Función para cargar el contenido de novedades.txt
+    // Función para cargar el contenido de novedades.txt desde GitHub
     function cargarNovedades() {
       const listaNovedades = document.getElementById('listaNovedades');
       const errorMessage = document.getElementById('errorMessage');
@@ -93,7 +93,8 @@
           return response.text();
         })
         .then(data => {
-          const novedades = data.split('\n').filter(line => line.trim() !== '');
+          // Procesar el archivo y separar las novedades por saltos de línea
+          const novedades = data.split('\n').filter(line => line.trim() !== '');  // Filtrar líneas vacías
           listaNovedades.innerHTML = ""; // Limpiar la lista antes de cargar
 
           if (novedades.length === 0) {
@@ -102,7 +103,8 @@
             novedades.forEach(novedad => {
               const div = document.createElement('div');
               div.classList.add('novedad');
-              div.textContent = novedad;
+              // Usamos innerHTML para procesar los saltos de línea y mostrar texto correctamente
+              div.innerHTML = novedad.replace(/\n/g, '<br>');  // Reemplazar saltos de línea con <br>
               listaNovedades.appendChild(div);
             });
           }
