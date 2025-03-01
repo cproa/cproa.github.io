@@ -76,6 +76,10 @@
     button:hover {
       background-color: #4a90e2;
     }
+
+    .profile-info {
+      margin: 1rem 0;
+    }
   </style>
 </head>
 <body>
@@ -87,19 +91,27 @@
 
   <div class="container">
     <h2 class="section-title">Bienvenido a tu perfil</h2>
-    <p class="text-center" id="nombreUsuario"></p>
+    
+    <!-- Información del usuario -->
+    <div id="nombreUsuario" class="profile-info"></div>
+    <div id="añoCursando" class="profile-info"></div>
+    <div id="curso" class="profile-info"></div>
+    <div id="correo" class="profile-info"></div>
+
     <button onclick="cerrarSesion()">Cerrar sesión</button>
-    <!-- Botón para regresar a la página de inicio (index.html) -->
     <button onclick="regresar()">Volver al inicio</button>
   </div>
 
   <script>
     // Obtener el usuario logueado desde localStorage
-    const usuarioLogueado = localStorage.getItem('usuarioLogueado');
+    const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
     
-    // Mostrar el nombre del usuario en la página
+    // Mostrar la información del usuario si está logueado
     if (usuarioLogueado) {
-      document.getElementById('nombreUsuario').textContent = 'Hola, ' + usuarioLogueado;
+      document.getElementById('nombreUsuario').textContent = 'Nombre: ' + usuarioLogueado.nombreCompleto;
+      document.getElementById('añoCursando').textContent = 'Año Cursando: ' + usuarioLogueado.añoCursando;
+      document.getElementById('comportamiento').textContent = 'tu comportamiento: ' + usuarioLogueado.comportamiento;
+      document.getElementById('correo').textContent = 'Correo: ' + usuarioLogueado.correo;
     } else {
       window.location.href = 'login.html'; // Si no hay usuario logueado, redirigir al login
     }
