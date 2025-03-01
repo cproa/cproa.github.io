@@ -6,125 +6,7 @@
   <title>Escuela Proa La Falda - Novedades</title>
   <link rel="icon" href="logo.ico" type="image/x-icon">
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-image: url('fondo3.avif');
-      background-size: cover;
-      background-position: center;
-    }
-
-    header {
-      background-color: rgba(0, 151, 255, 0.8);
-      color: white;
-      text-align: center;
-      padding: 2rem 0;
-      position: relative;
-      border-radius: 20px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-      margin: 2rem;
-    }
-
-    header img {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      height: 50px;
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin: 0;
-    }
-
-    header p {
-      margin: 0.5rem 0;
-    }
-
-    .container {
-      padding: 2rem;
-      max-width: 600px;
-      margin: 3rem auto;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #004170;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    button {
-      background-color: #72c5ff;
-      color: white;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #4a90e2;
-    }
-
-    .novedades-container {
-      margin-top: 30px;
-    }
-
-    .novedad {
-      background-color: #f1f1f1;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-publicacion {
-      margin-top: 20px;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-publicacion textarea {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    .form-publicacion button {
-      width: 100%;
-      padding: 10px;
-      background-color: #72c5ff;
-      color: white;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .form-publicacion button:hover {
-      background-color: #4a90e2;
-    }
+    /* (Aquí va el estilo de tu página) */
   </style>
 </head>
 <body>
@@ -138,7 +20,7 @@
     <h2 class="section-title">Novedades</h2>
 
     <!-- Formulario de publicación -->
-    <section class="form-publicacion" id="formPublicacion" style="display:none;">
+    <section class="form-publicacion" id="formPublicacion" style="display:block;">
       <h2>Publicar Novedad</h2>
       <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
       <button onclick="publicarNovedad()">Publicar</button>
@@ -154,23 +36,16 @@
   </div>
 
   <script>
-    // Simulación de usuario logueado con OP = true
-    const usuarioLogueado = {
-      OP: true // Establecemos OP como true
-    };
-
-    // Verificar si hay usuario logueado y si tiene rango OP=true
-    if (usuarioLogueado && usuarioLogueado.OP === true) {
-      // Mostrar formulario para publicar novedades
-      document.getElementById('formPublicacion').style.display = 'block';
-    }
-
     // Función para publicar una novedad
     function publicarNovedad() {
       const mensaje = document.getElementById('mensaje').value;
       if (mensaje.trim() !== "") {
-        // Aquí se puede agregar código para guardar la novedad en un archivo o base de datos
-        console.log("Novedad publicada: ", mensaje);
+        // Agregar un ";" al principio del mensaje
+        const mensajeConSeparador = `; ${mensaje}`;
+
+        // Llamar al backend para actualizar el archivo en GitHub
+        actualizarNovedadesGitHub(mensajeConSeparador);
+
         // Limpiar el campo de mensaje
         document.getElementById('mensaje').value = "";
       } else {
@@ -178,30 +53,53 @@
       }
     }
 
-    // Función para leer el archivo 'novedades.txt' y mostrar los mensajes
-    function cargarNovedades() {
-      // Simulamos la lectura del archivo con el siguiente contenido:
-      const contenidoArchivo = `hola gente como estan;buen dia gente;excelente dia`;
+    // Función para llamar al backend y actualizar el archivo en GitHub
+    function actualizarNovedadesGitHub(mensaje) {
+      const tokenGitHub = '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';  // Coloca tu token de acceso personal de GitHub
+      const repo = 'cproa/cproa.github.io';        // Cambia por tu usuario y repositorio
+      const archivo = 'novedades.txt';           // El archivo que quieres actualizar
 
-      // Convertimos el contenido del archivo en un arreglo de mensajes usando ";" como separador
-      const novedades = contenidoArchivo.split(';');
-      
-      // Mostrar las novedades
-      const listaNovedades = document.getElementById('listaNovedades');
-      listaNovedades.innerHTML = ""; // Limpiar la lista de novedades
+      // Primero, obtienes el contenido actual del archivo
+      fetch(`https://api.github.com/repos/${repo}/contents/${archivo}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `token ${tokenGitHub}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        const contenidoActual = atob(data.content);  // Decodificar el contenido del archivo
+        const nuevoContenido = contenidoActual + mensaje;  // Añadir el nuevo mensaje
 
-      novedades.forEach(novedad => {
-        const div = document.createElement('div');
-        div.classList.add('novedad');
-        
-        // Mostrar cada novedad separada correctamente
-        div.innerHTML = novedad;
-        listaNovedades.appendChild(div);
-      });
+        // Realizar un commit para actualizar el archivo
+        fetch(`https://api.github.com/repos/${repo}/contents/${archivo}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${tokenGitHub}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: "Actualizar novedades",
+            content: btoa(nuevoContenido),  // Volver a codificar el contenido
+            sha: data.sha  // Obtener la SHA del archivo para el commit
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Archivo actualizado:', data);
+          // Recargar las novedades o hacer algo después de actualizar el archivo
+          cargarNovedades();
+        })
+        .catch(error => console.error('Error al actualizar el archivo en GitHub:', error));
+      })
+      .catch(error => console.error('Error al obtener el archivo de GitHub:', error));
     }
 
-    // Cargar las novedades al cargar la página
-    cargarNovedades();
+    // Función para cargar las novedades y mostrarlas en la página
+    function cargarNovedades() {
+      // Aquí deberías tener un método para cargar las novedades actualizadas
+      console.log("Cargando novedades...");
+    }
   </script>
 </body>
 </html>
