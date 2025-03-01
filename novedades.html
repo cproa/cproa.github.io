@@ -107,7 +107,8 @@
           'Cache-Control': 'no-cache',  // No almacenar en caché
           'Pragma': 'no-cache',         // No almacenar en caché
           'Expires': '0'                // No almacenar en caché
-        })
+        }
+      })
         .then(response => {
           console.log('Respuesta del servidor:', response);
           if (!response.ok) {
