@@ -84,16 +84,16 @@
 
   </style>
   <script>
+    // Simulamos el archivo JSON que contiene los usuarios y contraseñas
+    const usuarios = {
+      "andres": "2277",
+      "juan": "1632"
+    };
+
     // Función para manejar el inicio de sesión
     function iniciarSesion() {
       let nombre = document.getElementById('nombre').value;
       let contrasena = document.getElementById('contrasena').value;
-
-      // Los datos de usuarios (simulando que vienen de un archivo JSON)
-      const usuarios = {
-        "andres": "2277",
-        "juan": "1632"
-      };
 
       // Verificar si el nombre de usuario existe y si la contraseña es correcta
       if (usuarios[nombre] && usuarios[nombre] === contrasena) {
@@ -119,7 +119,6 @@
     <input type="text" id="nombre" placeholder="Nombre de usuario" required>
     <input type="password" id="contrasena" placeholder="Contraseña" required>
     <button onclick="iniciarSesion()">Iniciar sesión</button>
-    <p>No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
   </div>
 </body>
 </html>
