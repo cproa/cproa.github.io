@@ -90,11 +90,11 @@
   <div class="container">
     <h2 class="section-title">Novedades</h2>
     <section class="novedades-container">
-      <h3>Mensajes:</h3>
-      <!-- Contenedor de comentarios -->
+      <h3>Comentarios:</h3>
+      <!-- Contenedor para mostrar los comentarios -->
       <div id="contenedorComentarios"></div>
 
-      <!-- Campo de comentario -->
+      <!-- Campo para agregar un nuevo comentario -->
       <textarea id="comentario" rows="4" cols="50" placeholder="Escribe un comentario..."></textarea><br><br>
       <button onclick="agregarComentario()">Enviar Comentario</button>
 
@@ -155,13 +155,19 @@
 
         contenedorComentarios.innerHTML = '';  // Limpiar los comentarios previos
 
-        // Iterar sobre los comentarios y agregarlos al contenedor
-        for (let id in comentarios) {
-          const comentario = comentarios[id];
-          const divComentario = document.createElement('div');
-          divComentario.classList.add('novedad');
-          divComentario.innerHTML = comentario.comentario;
-          contenedorComentarios.appendChild(divComentario);
+        // Verifica si no hay comentarios
+        if (comentarios) {
+          // Iterar sobre los comentarios y agregarlos al contenedor
+          for (let id in comentarios) {
+            const comentario = comentarios[id];
+            const divComentario = document.createElement('div');
+            divComentario.classList.add('novedad');
+            divComentario.innerHTML = comentario.comentario;
+            contenedorComentarios.appendChild(divComentario);
+          }
+        } else {
+          // Si no hay comentarios
+          contenedorComentarios.innerHTML = "<p>No hay comentarios aún.</p>";
         }
       });
     }
