@@ -59,20 +59,6 @@
       color: #004170;
     }
 
-    .novedades-container {
-      margin-top: 30px;
-    }
-
-    .novedad {
-      background-color: #f1f1f1;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
     .error-message {
       color: red;
       font-weight: bold;
@@ -89,34 +75,12 @@
 
   <div class="container">
     <h2 class="section-title">Novedades</h2>
-    <section class="novedades-container">
-      <h3>Mensajes:</h3>
-      <!-- INICIO_NOVEDADES -->
-      <div class="novedad">hola buenas tardes</div>
-      <div class="novedad">recorcholis gente</div>
-      <!-- FIN_NOVEDADES -->
-      <div id="errorMessage" class="error-message"></div>
-    </section>
+    <!-- Aquí puedes agregar más contenido relacionado a novedades si es necesario -->
 
-    <!-- Disqus Comments Section -->
+    <!-- Commento Comments Section -->
     <h3>Comentarios:</h3>
-    <div id="disqus_thread"></div>
-    <script>
-      var disqus_config = function () {
-        this.page.url = window.location.href;  // Obtiene la URL actual de la página
-        this.page.identifier = window.location.pathname;  // Usa el pathname (ruta) como identificador único
-      };
-
-      (function() { // NO MODIFIQUES NADA DE AQUÍ
-        var d = document, s = d.createElement('script');
-        s.src = 'https://cproa.disqus.com/embed.js'; // Asegúrate de que este es tu shortname correcto
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-      })();
-    </script>
-    <noscript>
-      Por favor habilita JavaScript para ver los <a href="https://disqus.com/?ref_noscript">comentarios de Disqus.</a>
-    </noscript>
+    <div id="commento"></div>
+    <script defer src="https://cdn.commento.io/js/commento.js"></script>
   </div>
 </body>
 </html>
