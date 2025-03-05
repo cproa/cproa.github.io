@@ -91,12 +91,83 @@
     <h2 class="section-title">Novedades</h2>
     <section class="novedades-container">
       <h3>Mensajes:</h3>
-      <!-- INICIO_NOVEDADES -->
-    <div class="novedad">hola buenas tardes</div>
-    <div class="novedad">recorcholis gente</div>
-    <!-- FIN_NOVEDADES -->
+      <!-- Contenedor de comentarios -->
+      <div id="contenedorComentarios"></div>
+
+      <!-- Campo de comentario -->
+      <textarea id="comentario" rows="4" cols="50" placeholder="Escribe un comentario..."></textarea><br><br>
+      <button onclick="agregarComentario()">Enviar Comentario</button>
+
       <div id="errorMessage" class="error-message"></div>
     </section>
   </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js"></script>
+
+  <script>
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAt-_7HtLPuLJR2C2D5TVOeEuYlIjjt6hg",
+      authDomain: "comentarios-fb8e4.firebaseapp.com",
+      databaseURL: "https://comentarios-fb8e4-default-rtdb.firebaseio.com",
+      projectId: "comentarios-fb8e4",
+      storageBucket: "comentarios-fb8e4.appspot.com",
+      messagingSenderId: "1060009122936",
+      appId: "1:1060009122936:web:0000000000000000000000"
+    };
+
+    // Inicialización de Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database(app);
+
+    // Función para agregar un comentario a Firebase
+    function agregarComentario() {
+      const comentario = document.getElementById("comentario").value;
+
+      if (comentario) {
+        // Referencia a la base de datos de Firebase en la sección "comentarios"
+        const comentariosRef = db.ref('comentarios');
+
+        // Agregar el comentario a la base de datos
+        comentariosRef.push({
+          comentario: comentario,
+          fecha: new Date().toISOString()
+        }).then(() => {
+          console.log('Comentario agregado');
+          mostrarComentarios();  // Actualizar la lista de comentarios
+        }).catch((error) => {
+          console.error('Error al agregar comentario: ', error);
+        });
+      } else {
+        alert('Por favor, ingrese un comentario');
+      }
+    }
+
+    // Función para mostrar los comentarios desde Firebase
+    function mostrarComentarios() {
+      const comentariosRef = db.ref('comentarios');
+      
+      comentariosRef.on('value', (snapshot) => {
+        const comentarios = snapshot.val();
+        const contenedorComentarios = document.getElementById("contenedorComentarios");
+
+        contenedorComentarios.innerHTML = '';  // Limpiar los comentarios previos
+
+        // Iterar sobre los comentarios y agregarlos al contenedor
+        for (let id in comentarios) {
+          const comentario = comentarios[id];
+          const divComentario = document.createElement('div');
+          divComentario.classList.add('novedad');
+          divComentario.innerHTML = comentario.comentario;
+          contenedorComentarios.appendChild(divComentario);
+        }
+      });
+    }
+
+    // Llamar a la función para mostrar los comentarios cuando se carga la página
+    mostrarComentarios();
+  </script>
 </body>
 </html>
