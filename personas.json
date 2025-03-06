@@ -1,0 +1,38 @@
+{
+  "49460426": {
+    "id": 0,
+    "contraseña": "2277",
+    "nombreCompleto": "Andrés Gabriel Morillo Figueroa",
+    "añoCursando": 4,
+    "comportamiento": "exelente",
+    "correo": "agmorillofigueroa@escuelasproa.edu.ar",
+    "OP": true
+  },
+  "50245080": {
+    "id": 1,
+    "contraseña": "1messigay5",
+    "nombreCompleto": "Ariel Valentin Ruizdiaz",
+    "añoCursando": 4,
+    "comportamiento": "nefasto",
+    "correo": "avruizdiaz@escuelasproa.edu.ar",
+    "OP": false
+  },
+  "49757518": {
+    "id": 2,
+    "contraseña": "petit",
+    "nombreCompleto": "Lautaro Otto Breininger",
+    "añoCursando": 4,
+    "comportamiento": "autista",
+    "correo": "lbreininger@escuelasproa.edu.ar",
+    "OP": true
+  },
+  "51420730": {
+    "id": 3,
+    "contraseña": "Safirceballos",
+    "nombreCompleto": "Safir Tiziano Ceballos",
+    "añoCursando": 2,
+    "comportamiento": "Regular",
+    "correo": "schavezceballos@escuelasproa.edu.ar",
+    "OP": false
+  }
+}
