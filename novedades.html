@@ -55,7 +55,7 @@
       const name = document.getElementById('name').value;
       const message = document.getElementById('message').value;
 
-      const newComment = { name, message };
+      const newComment = { name, message, timestamp: new Date().toISOString() };
 
       // Enviar el comentario al backend
       const response = await fetch('/.netlify/functions/comments', {
