@@ -16,8 +16,65 @@
 
   <div class="container">
     <h2 class="section-title">Novedades</h2>
-    <!-- Aquí puedes agregar más contenido relacionado a novedades si es necesario -->
-    <!-- Ahora puedes agregar tu propio sistema de comentarios sin usar Commento -->
+
+    <h3>Deja un comentario:</h3>
+    <form id="comentarioForm">
+      <input type="text" id="name" placeholder="Tu nombre" required>
+      <textarea id="message" placeholder="Escribe tu comentario..." required></textarea>
+      <button type="submit">Publicar comentario</button>
+    </form>
+
+    <h3>Comentarios:</h3>
+    <div id="comentariosLista"></div>
   </div>
+
+  <script>
+    // Obtener los comentarios existentes al cargar la página
+    async function loadComments() {
+      const response = await fetch('/.netlify/functions/comments');
+      const comments = await response.json();
+      
+      const comentariosLista = document.getElementById('comentariosLista');
+      comentariosLista.innerHTML = ''; // Limpiar los comentarios previos
+      comments.forEach(comment => {
+        const commentDiv = document.createElement('div');
+        commentDiv.classList.add('comment');
+        commentDiv.innerHTML = `
+          <strong>${comment.name}</strong>
+          <p>${comment.message}</p>
+          <small>${new Date(comment.timestamp).toLocaleString()}</small>
+        `;
+        comentariosLista.appendChild(commentDiv);
+      });
+    }
+
+    // Función para agregar un nuevo comentario
+    document.getElementById('comentarioForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const message = document.getElementById('message').value;
+
+      const newComment = { name, message };
+
+      // Enviar el comentario al backend
+      const response = await fetch('/.netlify/functions/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newComment)
+      });
+
+      if (response.ok) {
+        alert('Comentario publicado!');
+        loadComments(); // Recargar los comentarios
+        document.getElementById('comentarioForm').reset(); // Limpiar el formulario
+      } else {
+        alert('Error al publicar el comentario');
+      }
+    });
+
+    // Cargar los comentarios al inicio
+    loadComments();
+  </script>
 </body>
 </html>
