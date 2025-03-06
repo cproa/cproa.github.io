@@ -1,0 +1,3 @@
+[build]
+  functions = "netlify/functions"  # Ubicación de las funciones serverless
+  publish = "public"               # Ubicación de los archivos estáticos (HTML, CSS, JS)
