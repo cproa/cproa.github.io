@@ -5,66 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Escuela Proa La Falda - Novedades</title>
   <link rel="icon" href="logo.ico" type="image/x-icon">
-  <style>
-    /* Estilos generales */
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-image: url('fondo3.avif');
-      background-size: cover;
-      background-position: center;
-    }
-
-    header {
-      background-color: rgba(0, 151, 255, 0.8);
-      color: white;
-      text-align: center;
-      padding: 2rem 0;
-      position: relative;
-      border-radius: 20px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-      margin: 2rem;
-    }
-
-    header img {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      height: 50px;
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin: 0;
-    }
-
-    header p {
-      margin: 0.5rem 0;
-    }
-
-    .container {
-      padding: 2rem;
-      max-width: 800px;
-      margin: 3rem auto;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #004170;
-    }
-
-    .error-message {
-      color: red;
-      font-weight: bold;
-      text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css"> <!-- Enlace a tu archivo CSS -->
 </head>
 <body>
   <header>
@@ -75,12 +16,79 @@
 
   <div class="container">
     <h2 class="section-title">Novedades</h2>
-    <!-- Aquí puedes agregar más contenido relacionado a novedades si es necesario -->
+    <!-- Formulario para enviar comentarios -->
+    <div class="comment-form">
+      <h3>Deja tu comentario:</h3>
+      <input type="text" id="nombre" placeholder="Tu nombre" required>
+      <textarea id="comentario" placeholder="Escribe tu comentario" required></textarea>
+      <button onclick="enviarComentario()">Enviar comentario</button>
+    </div>
 
-    <!-- Commento Comments Section -->
-    <h3>Comentarios:</h3>
-    <div id="commento" data-commento-site-id="cproa"></div>
-    <script defer src="https://cdn.commento.io/js/commento.js"></script>
+    <!-- Lista de comentarios -->
+    <div class="comments-list" id="commentsList">
+      <h3>Comentarios:</h3>
+      <!-- Los comentarios se cargarán aquí -->
+    </div>
   </div>
+
+  <script>
+    // Función para cargar los comentarios
+    function cargarComentarios() {
+      fetch('/.netlify/functions/comments') // Llamada a la función de Netlify
+        .then(response => response.json())
+        .then(comments => {
+          const commentsList = document.getElementById('commentsList');
+          commentsList.innerHTML = ''; // Limpiar la lista actual
+
+          // Agregar cada comentario a la página
+          comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            commentElement.innerHTML = `
+              <p><strong>${comment.nombre}:</strong> ${comment.texto}</p>
+            `;
+            commentsList.appendChild(commentElement);
+          });
+        })
+        .catch(error => {
+          console.error('Error al cargar los comentarios:', error);
+        });
+    }
+
+    // Función para enviar un nuevo comentario
+    function enviarComentario() {
+      const nombre = document.getElementById('nombre').value;
+      const comentario = document.getElementById('comentario').value;
+
+      if (nombre && comentario) {
+        const newComment = {
+          nombre: nombre,
+          texto: comentario,
+        };
+
+        // Enviar el comentario a la función de Netlify
+        fetch('/.netlify/functions/comments', {
+          method: 'POST',
+          body: JSON.stringify(newComment),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert('Comentario enviado con éxito');
+          cargarComentarios(); // Recargar los comentarios
+        })
+        .catch(error => {
+          console.error('Error al enviar el comentario:', error);
+        });
+      } else {
+        alert('Por favor, completa todos los campos.');
+      }
+    }
+
+    // Cargar los comentarios al inicio
+    cargarComentarios();
+  </script>
 </body>
 </html>
