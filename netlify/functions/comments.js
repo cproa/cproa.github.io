@@ -1,35 +1,50 @@
-const fs = require('fs');  // Usamos fs para leer y escribir archivos
+// netlify/functions/comments.js
+const fs = require('fs');
 const path = require('path');
 
-const commentsFile = path.join(__dirname, '../../comments.json');  // Ruta al archivo de comentarios
-
 exports.handler = async (event, context) => {
-    if (event.httpMethod === 'GET') {
-        // Leer los comentarios desde el archivo
-        const comments = JSON.parse(fs.readFileSync(commentsFile, 'utf-8'));
-        return {
-            statusCode: 200,
-            body: JSON.stringify(comments),
-        };
-    } else if (event.httpMethod === 'POST') {
-        // Obtener el nuevo comentario desde la solicitud
-        const newComment = JSON.parse(event.body);
-        const comments = JSON.parse(fs.readFileSync(commentsFile, 'utf-8'));
+  const commentsFilePath = path.resolve(__dirname, '../../comments.json');
 
-        // Agregar el nuevo comentario
-        comments.push(newComment);
-
-        // Guardar los comentarios nuevamente en el archivo
-        fs.writeFileSync(commentsFile, JSON.stringify(comments));
-
+  if (event.httpMethod === 'POST') {
+    try {
+      const body = JSON.parse(event.body);
+      const newComment = body.comment;
+      if (!newComment) {
         return {
-            statusCode: 200,
-            body: JSON.stringify({ message: 'Comentario agregado con éxito' }),
+          statusCode: 400,
+          body: JSON.stringify({ error: 'Comentario vacío' })
         };
-    } else {
-        return {
-            statusCode: 405,
-            body: JSON.stringify({ message: 'Método no permitido' }),
-        };
+      }
+
+      // Leer los comentarios existentes
+      let comments = [];
+      try {
+        comments = JSON.parse(fs.readFileSync(commentsFilePath));
+      } catch (error) {
+        console.log('No se pudo leer el archivo de comentarios:', error);
+      }
+
+      // Agregar el nuevo comentario
+      comments.push({ comment: newComment, date: new Date().toISOString() });
+
+      // Escribir el archivo actualizado
+      fs.writeFileSync(commentsFilePath, JSON.stringify(comments));
+
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: 'Comentario publicado correctamente' })
+      };
+    } catch (error) {
+      console.error('Error al manejar el comentario:', error);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Error al publicar el comentario' })
+      };
     }
+  }
+
+  return {
+    statusCode: 405,
+    body: JSON.stringify({ error: 'Método no permitido' })
+  };
 };
