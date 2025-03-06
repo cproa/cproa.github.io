@@ -1,3 +1,10 @@
 [
-  { "comment": "Este es un comentario de ejemplo", "date": "2025-03-06T12:00:00Z" }
+  {
+    "comment": "¡Gran sitio web!",
+    "date": "2025-03-07T12:00:00Z"
+  },
+  {
+    "comment": "Me encanta el contenido.",
+    "date": "2025-03-07T13:00:00Z"
+  }
 ]
